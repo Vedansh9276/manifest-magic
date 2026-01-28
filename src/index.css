@@ -154,28 +154,19 @@
 }
 
 @layer utilities {
-  .extension-popup {
-    width: 360px;
-    min-height: 480px;
+  /* Glass morphism */
+  .glass {
+    background: hsl(var(--card) / 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid hsl(var(--border) / 0.5);
   }
 
-  .data-field {
-    @apply bg-secondary/50 rounded-md px-3 py-2 text-sm font-mono;
-  }
-
-  .status-dot {
-    @apply w-2 h-2 rounded-full animate-pulse;
-  }
-
-  .gradient-border {
-    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary) / 0.5));
-  }
-
+  /* Radial gradient background */
   .bg-gradient-radial {
     background: radial-gradient(circle at center, var(--tw-gradient-stops));
   }
 
-  /* Glowing text effect */
+  /* Glow text effect */
   .glow-text {
     text-shadow: 0 0 20px hsl(var(--primary) / 0.5), 0 0 40px hsl(var(--primary) / 0.3);
   }
@@ -193,18 +184,12 @@
   }
 
   @keyframes shimmer {
-    0% {
-      background-position: -200% 0;
-    }
-    100% {
-      background-position: 200% 0;
-    }
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
   }
 
-  /* Glass morphism */
-  .glass {
-    background: hsl(var(--card) / 0.7);
-    backdrop-filter: blur(10px);
-    border: 1px solid hsl(var(--border) / 0.5);
+  /* Gradient border utility */
+  .gradient-border {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary) / 0.7));
   }
 }

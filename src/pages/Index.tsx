@@ -1,57 +1,25 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import ProfileScoutPopup from '@/components/ProfileScoutPopup';
 import { Radar, Github, Zap, Database, Search, Users, ChevronRight, Sparkles, Code2, Layers, ArrowRight } from 'lucide-react';
 
 const Index = () => {
-  const [isHovered, setIsHovered] = useState(false);
   const [activeFeature, setActiveFeature] = useState<number | null>(null);
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.2
-      }
+      transition: { staggerChildren: 0.1, delayChildren: 0.1 }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 40, scale: 0.95 },
+    hidden: { opacity: 0, y: 24 },
     visible: { 
       opacity: 1, 
-      y: 0, 
-      scale: 1,
-      transition: { 
-        type: "spring" as const, 
-        stiffness: 200, 
-        damping: 20 
-      }
-    }
-  };
-
-  const floatingVariants = {
-    animate: {
-      y: [-5, 5, -5],
-      rotateZ: [-1, 1, -1],
-      transition: {
-        duration: 6,
-        repeat: Infinity,
-        ease: "easeInOut" as const
-      }
-    }
-  };
-
-  const glowPulse = {
-    animate: {
-      boxShadow: [
-        "0 0 20px hsl(174 84% 40% / 0.2), 0 0 40px hsl(174 84% 40% / 0.1)",
-        "0 0 40px hsl(174 84% 40% / 0.4), 0 0 80px hsl(174 84% 40% / 0.2)",
-        "0 0 20px hsl(174 84% 40% / 0.2), 0 0 40px hsl(174 84% 40% / 0.1)"
-      ],
-      transition: { duration: 3, repeat: Infinity }
+      y: 0,
+      transition: { type: "spring" as const, stiffness: 300, damping: 24 }
     }
   };
 
@@ -70,55 +38,21 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background dark overflow-hidden relative">
-      {/* Animated Background */}
+    <div className="min-h-screen bg-background overflow-x-hidden relative">
+      {/* Animated Background - Simplified for mobile */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        {/* Gradient orbs */}
         <motion.div
-          className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-radial from-primary/20 via-transparent to-transparent rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.2, 1],
-            rotate: [0, 180, 360],
-            x: [0, 100, 0],
-          }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          className="absolute -top-1/4 -left-1/4 w-1/2 h-1/2 bg-gradient-radial from-primary/10 via-transparent to-transparent rounded-full blur-3xl"
+          animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.4, 0.3] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
-          className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-radial from-primary/10 via-transparent to-transparent rounded-full blur-3xl"
-          animate={{
-            scale: [1.2, 1, 1.2],
-            rotate: [360, 180, 0],
-            y: [0, -50, 0],
-          }}
-          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+          className="absolute -bottom-1/4 -right-1/4 w-1/2 h-1/2 bg-gradient-radial from-primary/10 via-transparent to-transparent rounded-full blur-3xl"
+          animate={{ scale: [1.1, 1, 1.1], opacity: [0.3, 0.4, 0.3] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
         />
-        
-        {/* Floating particles */}
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-primary/40 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -100, 0],
-              x: [0, Math.random() * 50 - 25, 0],
-              opacity: [0, 1, 0],
-              scale: [0, 1.5, 0],
-            }}
-            transition={{
-              duration: 5 + Math.random() * 5,
-              repeat: Infinity,
-              delay: Math.random() * 5,
-              ease: "easeInOut"
-            }}
-          />
-        ))}
-
-        {/* Grid pattern */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--border)/0.3)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border)/0.3)_1px,transparent_1px)] bg-[size:60px_60px]" />
+        {/* Grid - hidden on mobile */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--border)/0.2)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border)/0.2)_1px,transparent_1px)] bg-[size:40px_40px] md:bg-[size:60px_60px] hidden sm:block" />
       </div>
 
       {/* Hero Section */}
@@ -126,112 +60,61 @@ const Index = () => {
         className="border-b border-border relative z-10"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: 0.5 }}
       >
-        <div className="container max-w-5xl mx-auto px-6 py-20">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            <motion.div 
-              className="flex items-center gap-4 mb-8"
-              variants={itemVariants}
-            >
+        <div className="container max-w-5xl mx-auto px-4 sm:px-6 py-12 sm:py-16 lg:py-20">
+          <motion.div variants={containerVariants} initial="hidden" animate="visible">
+            {/* Logo + Title */}
+            <motion.div className="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8" variants={itemVariants}>
               <motion.div 
-                className="w-16 h-16 rounded-2xl gradient-border flex items-center justify-center relative"
-                variants={glowPulse}
-                animate="animate"
-                whileHover={{ 
-                  rotate: 360, 
-                  scale: 1.1,
-                  transition: { duration: 0.6 }
-                }}
+                className="w-12 h-12 sm:w-14 lg:w-16 sm:h-14 lg:h-16 rounded-xl sm:rounded-2xl bg-primary flex items-center justify-center"
+                whileHover={{ rotate: 12, scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <Radar className="w-8 h-8 text-primary-foreground relative z-10" />
-                <motion.div
-                  className="absolute inset-0 rounded-2xl bg-primary/30"
-                  animate={{ 
-                    scale: [1, 1.2, 1],
-                    opacity: [0.5, 0.2, 0.5]
-                  }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                />
+                <Radar className="w-6 h-6 sm:w-7 lg:w-8 sm:h-7 lg:h-8 text-primary-foreground" />
               </motion.div>
               <div>
-                <motion.h1 
-                  className="text-4xl md:text-5xl font-bold text-foreground flex items-center gap-3"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.3, type: "spring" }}
-                >
+                <motion.h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-foreground flex items-center gap-2 sm:gap-3">
                   Profile Scout
                   <motion.span
-                    animate={{ 
-                      rotate: [0, 15, -15, 0],
-                      scale: [1, 1.2, 1]
-                    }}
-                    transition={{ duration: 2, repeat: Infinity }}
+                    animate={{ rotate: [0, 10, -10, 0] }}
+                    transition={{ duration: 2.5, repeat: Infinity }}
                   >
-                    <Sparkles className="w-8 h-8 text-primary" />
+                    <Sparkles className="w-5 h-5 sm:w-6 lg:w-8 sm:h-6 lg:h-8 text-primary" />
                   </motion.span>
                 </motion.h1>
-                <motion.p 
-                  className="text-muted-foreground text-lg mt-1"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.5 }}
-                >
-                  Manifest V3 Chrome Extension
-                </motion.p>
+                <p className="text-muted-foreground text-sm sm:text-base lg:text-lg mt-0.5">Manifest V3 Chrome Extension</p>
               </div>
             </motion.div>
             
+            {/* Description */}
             <motion.p 
-              className="text-xl text-muted-foreground max-w-2xl mb-10 leading-relaxed"
+              className="text-base sm:text-lg lg:text-xl text-muted-foreground max-w-2xl mb-6 sm:mb-8 lg:mb-10 leading-relaxed"
               variants={itemVariants}
             >
               A browser extension that fetches real profile data from the{' '}
-              <motion.span 
-                className="text-primary font-semibold inline-flex items-center gap-1"
-                whileHover={{ scale: 1.05 }}
-              >
-                <Github className="w-5 h-5" />
+              <span className="text-primary font-semibold inline-flex items-center gap-1">
+                <Github className="w-4 h-4 sm:w-5 sm:h-5" />
                 GitHub API
-              </motion.span>, 
+              </span>, 
               displays it in a clean popup, and demonstrates API integration in browser extensions.
             </motion.p>
 
-            <motion.div 
-              className="flex flex-wrap gap-4"
-              variants={itemVariants}
-            >
+            {/* Badges */}
+            <motion.div className="flex flex-wrap gap-2 sm:gap-3" variants={itemVariants}>
               {[
-                { icon: Github, text: 'GitHub API', delay: 0 },
-                { icon: Zap, text: 'Manifest V3', delay: 0.1 },
-                { icon: Database, text: 'Real-time Data', delay: 0.2 },
+                { icon: Github, text: 'GitHub API' },
+                { icon: Zap, text: 'Manifest V3' },
+                { icon: Database, text: 'Real-time Data' },
               ].map((badge, i) => (
                 <motion.div
                   key={badge.text}
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-secondary/80 text-secondary-foreground border border-border/50 backdrop-blur-sm"
-                  initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  transition={{ delay: 0.6 + badge.delay, type: "spring" }}
-                  whileHover={{ 
-                    scale: 1.05, 
-                    y: -3,
-                    boxShadow: "0 10px 30px -10px hsl(var(--primary) / 0.3)",
-                    borderColor: "hsl(var(--primary) / 0.5)"
-                  }}
-                  whileTap={{ scale: 0.95 }}
+                  className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl bg-secondary/80 text-secondary-foreground border border-border/50"
+                  whileHover={{ scale: 1.03, y: -2 }}
+                  whileTap={{ scale: 0.97 }}
                 >
-                  <motion.div
-                    whileHover={{ rotate: 360 }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    <badge.icon className="w-4 h-4 text-primary" />
-                  </motion.div>
-                  <span className="text-sm font-medium">{badge.text}</span>
+                  <badge.icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary" />
+                  <span className="text-xs sm:text-sm font-medium">{badge.text}</span>
                 </motion.div>
               ))}
             </motion.div>
@@ -240,214 +123,126 @@ const Index = () => {
       </motion.div>
 
       {/* Main Content */}
-      <div className="container max-w-5xl mx-auto px-6 py-16 relative z-10">
-        <div className="grid md:grid-cols-2 gap-16 items-start">
+      <div className="container max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12 lg:py-16 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-start">
+          
           {/* Extension Preview */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.4, type: "spring", stiffness: 100 }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+            className="order-2 lg:order-1"
           >
-            <motion.h2 
-              className="text-xl font-semibold text-foreground mb-4 flex items-center gap-2"
-              whileHover={{ x: 5 }}
-            >
-              <motion.span
-                animate={{ rotate: [0, 360] }}
-                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-              >
-                <Sparkles className="w-5 h-5 text-primary" />
-              </motion.span>
+            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-3 sm:mb-4 flex items-center gap-2">
+              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
               Live Preview
-            </motion.h2>
-            <motion.p 
-              className="text-sm text-muted-foreground mb-6"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
-            >
+            </h2>
+            <p className="text-xs sm:text-sm text-muted-foreground mb-4 sm:mb-6">
               Try searching for GitHub users below. In preview mode, demo data is shown. 
               Install the extension for real API calls.
-            </motion.p>
+            </p>
             
             <motion.div 
               className="relative"
-              variants={floatingVariants}
-              animate="animate"
-              onHoverStart={() => setIsHovered(true)}
-              onHoverEnd={() => setIsHovered(false)}
+              whileHover={{ scale: 1.01 }}
+              transition={{ type: "spring", stiffness: 300 }}
             >
-              {/* Glow effect behind the popup */}
+              {/* Glow effect */}
               <motion.div
-                className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-primary/10 to-primary/20 rounded-3xl blur-2xl"
-                animate={{
-                  opacity: isHovered ? 0.8 : 0.4,
-                  scale: isHovered ? 1.05 : 1,
-                }}
-                transition={{ duration: 0.3 }}
+                className="absolute -inset-2 sm:-inset-4 bg-primary/10 rounded-2xl sm:rounded-3xl blur-2xl"
+                animate={{ opacity: [0.3, 0.5, 0.3] }}
+                transition={{ duration: 3, repeat: Infinity }}
               />
               
-              <motion.div 
-                className="rounded-2xl overflow-hidden shadow-2xl border-2 border-border relative bg-card"
-                whileHover={{ 
-                  scale: 1.02,
-                  boxShadow: "0 30px 60px -15px hsl(var(--primary) / 0.3), 0 0 100px -30px hsl(var(--primary) / 0.4)"
-                }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                <motion.div 
-                  className="bg-card border-b border-border px-4 py-3 flex items-center gap-2"
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.8 }}
-                >
-                  <div className="flex gap-2">
-                    {['destructive', 'warning', 'success'].map((color, i) => (
+              {/* Popup container */}
+              <div className="rounded-xl sm:rounded-2xl overflow-hidden shadow-xl sm:shadow-2xl border border-border relative bg-card">
+                {/* Browser chrome */}
+                <div className="bg-card border-b border-border px-3 sm:px-4 py-2 sm:py-2.5 flex items-center gap-2">
+                  <div className="flex gap-1.5">
+                    {['hsl(0 84% 60%)', 'hsl(38 92% 50%)', 'hsl(142 71% 45%)'].map((color, i) => (
                       <motion.div 
-                        key={color}
-                        className={`w-3 h-3 rounded-full bg-${color}/60`}
-                        style={{
-                          backgroundColor: color === 'destructive' ? 'hsl(0 84% 60% / 0.6)' : 
-                                          color === 'warning' ? 'hsl(38 92% 50% / 0.6)' : 
-                                          'hsl(142 71% 45% / 0.6)'
-                        }}
-                        whileHover={{ scale: 1.3 }}
-                        animate={{ 
-                          scale: [1, 1.1, 1],
-                        }}
-                        transition={{ 
-                          delay: i * 0.1,
-                          duration: 2,
-                          repeat: Infinity 
-                        }}
+                        key={i}
+                        className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full"
+                        style={{ backgroundColor: color }}
+                        animate={{ scale: [1, 1.1, 1] }}
+                        transition={{ delay: i * 0.1, duration: 2, repeat: Infinity }}
                       />
                     ))}
                   </div>
-                  <motion.span 
-                    className="text-xs text-muted-foreground ml-2 flex items-center gap-2"
-                    animate={{ opacity: [0.7, 1, 0.7] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  >
+                  <span className="text-[10px] sm:text-xs text-muted-foreground ml-2 flex items-center gap-1.5">
                     Profile Scout Popup
                     <motion.div
-                      className="w-2 h-2 rounded-full bg-success"
+                      className="w-1.5 h-1.5 rounded-full bg-success"
                       animate={{ scale: [1, 1.3, 1] }}
-                      transition={{ duration: 1, repeat: Infinity }}
+                      transition={{ duration: 1.5, repeat: Infinity }}
                     />
-                  </motion.span>
-                </motion.div>
+                  </span>
+                </div>
                 <ProfileScoutPopup />
-              </motion.div>
+              </div>
             </motion.div>
           </motion.div>
 
-          {/* Features & Instructions */}
+          {/* Features & Info */}
           <motion.div 
-            className="space-y-10"
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.5, type: "spring", stiffness: 100 }}
+            className="space-y-6 sm:space-y-8 lg:space-y-10 order-1 lg:order-2"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
           >
             {/* What it does */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-            >
-              <motion.h2 
-                className="text-xl font-semibold text-foreground mb-6 flex items-center gap-2"
-                whileHover={{ x: 5 }}
-              >
+            <div>
+              <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 sm:mb-5 flex items-center gap-2">
                 What it does
-                <motion.span
-                  animate={{ x: [0, 5, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                >
-                  <ChevronRight className="w-5 h-5 text-primary" />
-                </motion.span>
-              </motion.h2>
-              <ul className="space-y-4">
+                <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+              </h2>
+              <ul className="space-y-3 sm:space-y-4">
                 {features.map((feature, i) => (
                   <motion.li 
                     key={i} 
-                    className="flex items-start gap-4 text-muted-foreground group cursor-pointer"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.7 + i * 0.1, type: "spring" }}
+                    className="flex items-start gap-3 text-muted-foreground cursor-pointer"
                     onHoverStart={() => setActiveFeature(i)}
                     onHoverEnd={() => setActiveFeature(null)}
-                    whileHover={{ x: 10 }}
+                    whileHover={{ x: 6 }}
                   >
                     <motion.div
-                      className={`p-2 rounded-lg bg-gradient-to-br ${feature.color} shrink-0`}
-                      animate={{ 
-                        scale: activeFeature === i ? 1.1 : 1,
-                        rotate: activeFeature === i ? 10 : 0
-                      }}
-                      transition={{ type: "spring", stiffness: 400 }}
+                      className={`p-1.5 sm:p-2 rounded-md sm:rounded-lg bg-gradient-to-br ${feature.color} shrink-0`}
+                      animate={{ scale: activeFeature === i ? 1.1 : 1 }}
                     >
-                      <feature.icon className="w-4 h-4 text-white" />
+                      <feature.icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
                     </motion.div>
-                    <motion.span
-                      animate={{ 
-                        color: activeFeature === i ? "hsl(var(--foreground))" : "hsl(var(--muted-foreground))"
-                      }}
-                    >
-                      {feature.text}
-                    </motion.span>
+                    <span className="text-sm sm:text-base">{feature.text}</span>
                   </motion.li>
                 ))}
               </ul>
-            </motion.div>
+            </div>
 
             {/* API Details */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8 }}
+              transition={{ delay: 0.4 }}
             >
-              <motion.h2 
-                className="text-xl font-semibold text-foreground mb-6"
-                whileHover={{ x: 5 }}
-              >
-                API Details
-              </motion.h2>
-              <motion.div 
-                className="bg-card/80 backdrop-blur-sm border-2 border-border rounded-xl p-5 space-y-4"
-                whileHover={{ 
-                  borderColor: "hsl(var(--primary) / 0.3)",
-                  boxShadow: "0 20px 40px -20px hsl(var(--primary) / 0.2)"
-                }}
-                transition={{ duration: 0.3 }}
-              >
+              <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 sm:mb-5">API Details</h2>
+              <div className="bg-card/80 backdrop-blur-sm border border-border rounded-lg sm:rounded-xl p-4 sm:p-5 space-y-3 sm:space-y-4">
                 <div>
-                  <p className="text-xs text-muted-foreground mb-2">Endpoint</p>
-                  <motion.code 
-                    className="text-sm text-primary bg-secondary px-3 py-1.5 rounded-lg inline-block font-mono"
-                    whileHover={{ scale: 1.02 }}
-                  >
+                  <p className="text-[10px] sm:text-xs text-muted-foreground mb-1.5">Endpoint</p>
+                  <code className="text-xs sm:text-sm text-primary bg-secondary px-2 sm:px-3 py-1 sm:py-1.5 rounded-md sm:rounded-lg inline-block font-mono break-all">
                     https://api.github.com/users/:username
-                  </motion.code>
+                  </code>
                 </div>
                 <div>
-                  <p className="text-xs text-muted-foreground mb-2">Auth Required</p>
-                  <p className="text-sm text-foreground">No (public API, 60 requests/hour)</p>
+                  <p className="text-[10px] sm:text-xs text-muted-foreground mb-1.5">Auth Required</p>
+                  <p className="text-xs sm:text-sm text-foreground">No (public API, 60 requests/hour)</p>
                 </div>
                 <div>
-                  <p className="text-xs text-muted-foreground mb-2">Try these usernames</p>
-                  <div className="flex flex-wrap gap-2">
-                    {['octocat', 'torvalds', 'gaearon', 'sindresorhus', 'tj'].map((name, i) => (
+                  <p className="text-[10px] sm:text-xs text-muted-foreground mb-1.5">Try these usernames</p>
+                  <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                    {['octocat', 'torvalds', 'gaearon', 'sindresorhus'].map((name) => (
                       <motion.code 
                         key={name} 
-                        className="text-xs bg-secondary px-3 py-1.5 rounded-lg text-foreground cursor-pointer border border-transparent"
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 1 + i * 0.05 }}
-                        whileHover={{ 
-                          scale: 1.1, 
-                          borderColor: "hsl(var(--primary))",
-                          color: "hsl(var(--primary))"
-                        }}
+                        className="text-[10px] sm:text-xs bg-secondary px-2 sm:px-2.5 py-1 rounded-md text-foreground cursor-pointer"
+                        whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
                         {name}
@@ -455,114 +250,69 @@ const Index = () => {
                     ))}
                   </div>
                 </div>
-              </motion.div>
+              </div>
             </motion.div>
 
             {/* Installation */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9 }}
+              transition={{ delay: 0.5 }}
             >
-              <motion.h2 
-                className="text-xl font-semibold text-foreground mb-6"
-                whileHover={{ x: 5 }}
-              >
-                Installation
-              </motion.h2>
-              <motion.div 
-                className="bg-card/80 backdrop-blur-sm border-2 border-border rounded-xl p-5"
-                whileHover={{ 
-                  borderColor: "hsl(var(--primary) / 0.3)",
-                  boxShadow: "0 20px 40px -20px hsl(var(--primary) / 0.2)"
-                }}
-              >
-                <ol className="space-y-4 text-sm text-muted-foreground">
+              <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 sm:mb-5">Installation</h2>
+              <div className="bg-card/80 backdrop-blur-sm border border-border rounded-lg sm:rounded-xl p-4 sm:p-5">
+                <ol className="space-y-3 sm:space-y-4 text-xs sm:text-sm text-muted-foreground">
                   {[
                     { step: 1, text: 'Build:', code: 'npm run build' },
                     { step: 2, text: 'Open', code: 'chrome://extensions' },
                     { step: 3, text: 'Enable "Developer mode"', code: null },
                     { step: 4, text: 'Click "Load unpacked" → Select', code: 'dist' },
-                  ].map((item, i) => (
+                  ].map((item) => (
                     <motion.li 
                       key={item.step}
-                      className="flex gap-4 items-center"
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 1.1 + i * 0.1 }}
-                      whileHover={{ x: 5 }}
+                      className="flex gap-3 items-center"
+                      whileHover={{ x: 4 }}
                     >
-                      <motion.span 
-                        className="w-7 h-7 rounded-full bg-primary/20 text-primary flex items-center justify-center text-xs font-bold shrink-0"
-                        whileHover={{ scale: 1.2, rotate: 360 }}
-                        transition={{ type: "spring" }}
-                      >
+                      <span className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-primary/20 text-primary flex items-center justify-center text-[10px] sm:text-xs font-bold shrink-0">
                         {item.step}
-                      </motion.span>
-                      <span className="flex items-center gap-2 flex-wrap">
+                      </span>
+                      <span className="flex items-center gap-1.5 flex-wrap">
                         {item.text}
                         {item.code && (
-                          <motion.code 
-                            className="bg-secondary px-2.5 py-1 rounded-lg text-foreground font-mono text-xs"
-                            whileHover={{ scale: 1.05 }}
-                          >
+                          <code className="bg-secondary px-2 py-0.5 sm:py-1 rounded-md text-foreground font-mono text-[10px] sm:text-xs">
                             {item.code}
-                          </motion.code>
+                          </code>
                         )}
                       </span>
                     </motion.li>
                   ))}
                 </ol>
-              </motion.div>
+              </div>
             </motion.div>
 
             {/* Architecture */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1 }}
+              transition={{ delay: 0.6 }}
             >
-              <motion.h2 
-                className="text-xl font-semibold text-foreground mb-6"
-                whileHover={{ x: 5 }}
-              >
-                Architecture
-              </motion.h2>
-              <motion.div 
-                className="bg-card/80 backdrop-blur-sm border-2 border-border rounded-xl p-5 space-y-3"
-                whileHover={{ 
-                  borderColor: "hsl(var(--primary) / 0.3)",
-                  boxShadow: "0 20px 40px -20px hsl(var(--primary) / 0.2)"
-                }}
-              >
+              <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 sm:mb-5">Architecture</h2>
+              <div className="bg-card/80 backdrop-blur-sm border border-border rounded-lg sm:rounded-xl p-4 sm:p-5 space-y-2 sm:space-y-3">
                 {architectureItems.map((item, i) => (
                   <motion.div 
                     key={item.name}
-                    className="flex items-center gap-3 p-2 rounded-lg hover:bg-secondary/50 cursor-pointer"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 1.2 + i * 0.1 }}
-                    whileHover={{ x: 10, backgroundColor: "hsl(var(--secondary) / 0.8)" }}
+                    className="flex items-center gap-2 sm:gap-3 p-1.5 sm:p-2 rounded-md sm:rounded-lg hover:bg-secondary/50 cursor-pointer"
+                    whileHover={{ x: 6, backgroundColor: "hsl(var(--secondary) / 0.8)" }}
                   >
-                    <motion.div
-                      whileHover={{ rotate: 360, scale: 1.2 }}
-                      transition={{ duration: 0.5 }}
-                    >
-                      <item.icon className="w-4 h-4 text-primary" />
-                    </motion.div>
-                    <code className="bg-secondary px-2.5 py-1 rounded-lg text-primary font-mono text-xs">
+                    <item.icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary shrink-0" />
+                    <code className="bg-secondary px-2 py-0.5 sm:py-1 rounded-md text-primary font-mono text-[10px] sm:text-xs">
                       {item.name}
                     </code>
-                    <motion.span
-                      animate={{ x: [0, 3, 0] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
-                    >
-                      <ArrowRight className="w-3 h-3 text-muted-foreground" />
-                    </motion.span>
-                    <span className="text-muted-foreground text-sm">{item.desc}</span>
+                    <ArrowRight className="w-3 h-3 text-muted-foreground shrink-0" />
+                    <span className="text-muted-foreground text-xs sm:text-sm">{item.desc}</span>
                   </motion.div>
                 ))}
-              </motion.div>
+              </div>
             </motion.div>
           </motion.div>
         </div>
